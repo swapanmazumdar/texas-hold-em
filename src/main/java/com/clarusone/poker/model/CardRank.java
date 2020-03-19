@@ -1,11 +1,12 @@
 package com.clarusone.poker.model;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
-
+/**
+ * Contains predefined constants of all known ranks in playing cards. Any new rank should be defined here for
+ * extensibility.
+ */
 public enum CardRank {
 
-    ACE(Character.getNumericValue('A')),
+    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -15,23 +16,11 @@ public enum CardRank {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    JACK(Character.getNumericValue('J')),
-    QUEEN(Character.getNumericValue('Q')),
-    KING(Character.getNumericValue('K'));
+    JACK(11),
+    QUEEN(12),
+    KING(13);
 
-    private final SortedSet set = new TreeSet<CardRank>(); // internal sorted binary tree
-
-    CardRank(int value) {
-        set.add(value);
+    CardRank(int rank) {
     }
 
-    public boolean isValid(char rank) {
-        final boolean contains = set.contains(rank);
-        return contains;
-    }
-
-    public static void main(String[] args) {
-        int numValue = Character.getNumericValue('J');
-        System.out.println(numValue);
-    }
 }
