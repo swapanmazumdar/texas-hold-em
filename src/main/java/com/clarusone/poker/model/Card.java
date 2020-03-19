@@ -1,5 +1,8 @@
 package com.clarusone.poker.model;
 
+/**
+ * Card consists of CardRank and CardSuite.
+ */
 public class Card {
 
     private CardRank cardRank;
@@ -24,6 +27,14 @@ public class Card {
         this.cardSuite = builder.cardSuite;
     }
 
+    public CardRank getCardRank() {
+        return cardRank;
+    }
+
+    public CardSuite getCardSuite() {
+        return cardSuite;
+    }
+
     @Override
     public int hashCode() {
         int result = this.cardRank.hashCode();
@@ -40,6 +51,6 @@ public class Card {
             return false;
         }
         Card card = (Card) obj;
-        return card.cardRank == cardRank && card.cardSuite == cardSuite;
+        return cardRank.equals(card.getCardRank()) && cardSuite.equals(card.cardSuite);
     }
 }
