@@ -1,6 +1,6 @@
 package com.clarusone.poker.model;
 
-public class PlayingCard {
+public class Card {
 
     private CardRank cardRank;
     private CardSuite cardSuite;
@@ -14,14 +14,32 @@ public class PlayingCard {
             this.cardSuite = cardSuite;
         }
 
-        public PlayingCard build() {
-            return new PlayingCard(this);
+        public Card build() {
+            return new Card(this);
         }
     }
 
-    private PlayingCard(CardBuilder builder) {
+    private Card(CardBuilder builder) {
         this.cardRank = builder.cardRank;
         this.cardSuite = builder.cardSuite;
     }
 
+    @Override
+    public int hashCode() {
+        int result = this.cardRank.hashCode();
+        result = 31 * result + this.cardSuite.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Card)) {
+            return false;
+        }
+        Card card = (Card) obj;
+        return card.cardRank == cardRank && card.cardSuite == cardSuite;
+    }
 }
