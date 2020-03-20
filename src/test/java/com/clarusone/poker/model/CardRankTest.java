@@ -24,6 +24,13 @@ public class CardRankTest {
         Assert.assertEquals(CardRank.JACK, CardRank.resolveAsCardRank(rank));
     }
 
+    @Test
+    public void should_Pass_CompareToTest_OfCardRanks() {
+        Assert.assertTrue(CardRank.JACK.compareTo(CardRank.JACK) == 0);
+        Assert.assertTrue(CardRank.ACE.compareTo(CardRank.EIGHT) > 0);
+        Assert.assertTrue(CardRank.KING.compareTo(CardRank.ACE) < 0);
+    }
+
     @Test(expected = InvalidCardRankException.class)
     public void should_Throw_InvalidCardRankException_For_InvalidCardRank() {
         char rank = 'B';
