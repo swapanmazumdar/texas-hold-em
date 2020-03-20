@@ -1,8 +1,8 @@
 package com.clarusone.poker.model;
 
 /**
- * Card consists of CardRank and CardSuite. Two Card objects may be compared with each other according to the comparable
- * natural ordering.
+ * Card consists of CardRank and CardSuite. Two Card objects may be compared with each other according to it's CardRank
+ * object.
  */
 public class Card implements Comparable<Card> {
 
@@ -63,16 +63,8 @@ public class Card implements Comparable<Card> {
     }
 
     @Override
-    public int compareTo(Card otherCard) {
-        int thisHashCode = this.hashCode();
-        int otherHashCode = otherCard.hashCode();
-        if (thisHashCode < otherHashCode) {
-            return -1;
-        } else if (thisHashCode > otherHashCode) {
-            return 1;
-        } else {
-            return 0;
-        }
+    public int compareTo(Card o) {
+        return this.cardRank.compareTo(o.getCardRank());
     }
 
     @Override
