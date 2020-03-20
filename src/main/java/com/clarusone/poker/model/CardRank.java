@@ -1,5 +1,7 @@
 package com.clarusone.poker.model;
 
+import com.clarusone.poker.exception.InvalidCardRankException;
+
 /**
  * Contains predefined constants of all known ranks in playing cards in natural order. Any new rank should be defined
  * here for extensibility. The lowest ordinal is 0 for TWO and the highest ordinal is 12 for ACE. Though the rank starts
@@ -48,10 +50,52 @@ public enum CardRank {
         return result;
     }
 
-    public static void main(String[] args) {
-        CardRank[] cardRanks = CardRank.values();
-        for (CardRank cardRank : cardRanks) {
-            System.out.println(cardRank.name() + " " + cardRank.ordinal());
+    public static CardRank resolveAsCardRank(char rankChar) {
+        CardRank cardRank = null;
+        switch (rankChar) {
+            case '2':
+                cardRank = CardRank.TWO;
+                break;
+            case '3':
+                cardRank = CardRank.THREE;
+                break;
+            case '4':
+                cardRank = CardRank.FOUR;
+                break;
+            case '5':
+                cardRank = CardRank.FIVE;
+                break;
+            case '6':
+                cardRank = CardRank.SIX;
+                break;
+            case '7':
+                cardRank = CardRank.SEVEN;
+                break;
+            case '8':
+                cardRank = CardRank.EIGHT;
+                break;
+            case '9':
+                cardRank = CardRank.NINE;
+                break;
+            case 'T':
+                cardRank = CardRank.TEN;
+                break;
+            case 'J':
+                cardRank = CardRank.JACK;
+                break;
+            case 'Q':
+                cardRank = CardRank.QUEEN;
+                break;
+            case 'K':
+                cardRank = CardRank.KING;
+                break;
+            case 'A':
+                cardRank = CardRank.ACE;
+                break;
+            default:
+                throw new InvalidCardRankException(rankChar + " is not a valid Card Rank");
         }
+        return cardRank;
     }
+
 }

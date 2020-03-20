@@ -6,15 +6,15 @@ package com.clarusone.poker.model;
 public class Card {
 
     private CardRank cardRank;
-    private CardSuite cardSuite;
+    private CardSuit cardSuit;
 
     public static class CardBuilder {
         private final CardRank cardRank;
-        private final CardSuite cardSuite;
+        private final CardSuit cardSuit;
 
-        public CardBuilder(CardRank cardRank, CardSuite cardSuite) {
+        public CardBuilder(CardRank cardRank, CardSuit cardSuite) {
             this.cardRank = cardRank;
-            this.cardSuite = cardSuite;
+            this.cardSuit = cardSuite;
         }
 
         public Card build() {
@@ -24,21 +24,25 @@ public class Card {
 
     private Card(CardBuilder builder) {
         this.cardRank = builder.cardRank;
-        this.cardSuite = builder.cardSuite;
+        this.cardSuit = builder.cardSuit;
     }
 
     public CardRank getCardRank() {
         return cardRank;
     }
 
-    public CardSuite getCardSuite() {
-        return cardSuite;
+    public CardSuit getCardSuit() {
+        return cardSuit;
+    }
+
+    public int getRankValue() {
+        return cardRank.ordinal();
     }
 
     @Override
     public int hashCode() {
         int result = this.cardRank.hashCode();
-        result = 31 * result + this.cardSuite.hashCode();
+        result = 31 * result + this.cardSuit.hashCode();
         return result;
     }
 
@@ -51,6 +55,11 @@ public class Card {
             return false;
         }
         Card card = (Card) obj;
-        return cardRank.equals(card.getCardRank()) && cardSuite.equals(card.cardSuite);
+        return cardRank.equals(card.getCardRank()) && cardSuit.equals(card.cardSuit);
+    }
+
+    @Override
+    public String toString() {
+        return "CardRank: " + this.cardRank + ", CardSuit: " + this.cardSuit;
     }
 }

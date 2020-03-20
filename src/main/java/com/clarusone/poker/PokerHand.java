@@ -1,9 +1,13 @@
 package com.clarusone.poker;
 
+import com.clarusone.poker.helper.PokerHandCardParser;
+
 public class PokerHand implements Comparable<PokerHand> {
 
-    public PokerHand(String fiveCards) {
+    private final String[] fiveCards;
 
+    public PokerHand(String fiveCards) {
+        this.fiveCards = PokerHandCardParser.parseCardsAs2Chars(fiveCards);
     }
 
     @Override
