@@ -7,6 +7,8 @@ import com.clarusone.poker.model.CardSuit;
 
 import java.util.*;
 
+import static java.util.Collections.sort;
+
 public class PokerRankingHelper {
 
     /**
@@ -78,14 +80,4 @@ public class PokerRankingHelper {
         return pokerRanking;
     }
 
-    /**
-     * Calculates the rank and suit distributions.
-     */
-    public void calculateDistributions(List<Card> cards) {
-        int rankDist[] = new int[6];
-        for (Card card : cards) {
-//            rankDist[card.getRank()]++;
-  //          suitDist[card.getSuit()]++;
-        }
-    }
 }
