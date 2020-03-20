@@ -1,7 +1,8 @@
 package com.clarusone.poker.model;
 
 /**
- * Card consists of CardRank and CardSuite.
+ * Card consists of CardRank and CardSuite. Two Card objects may be compared with each other base on natural comparison
+ * method.
  */
 public class Card implements Comparable<Card>{
 
