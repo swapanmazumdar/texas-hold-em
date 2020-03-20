@@ -3,7 +3,10 @@ package com.clarusone.poker.model;
 /**
  * Card consists of CardRank and CardSuite.
  */
-public class Card {
+public class Card implements Comparable<Card>{
+
+    public static final int NO_OF_RANKS_IN_A_DECK = 13;
+    public static final int NO_OF_SUITS_IN_A_DECK = 4;
 
     private CardRank cardRank;
     private CardSuit cardSuit;
@@ -56,6 +59,19 @@ public class Card {
         }
         Card card = (Card) obj;
         return cardRank.equals(card.getCardRank()) && cardSuit.equals(card.cardSuit);
+    }
+
+    @Override
+    public int compareTo(Card otherCard) {
+        int thisHashCode = this.hashCode();
+        int otherHashCode = otherCard.hashCode();
+        if(thisHashCode < otherHashCode) {
+            return -1;
+        } else if(thisHashCode > otherHashCode) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override

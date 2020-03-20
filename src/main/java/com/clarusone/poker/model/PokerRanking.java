@@ -1,4 +1,4 @@
-package com.clarusone.poker.engine;
+package com.clarusone.poker.model;
 
 /**
  * Rankings in Poker (Texas Hold'em) from the lowest to the highest.

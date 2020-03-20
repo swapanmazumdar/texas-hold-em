@@ -1,6 +1,6 @@
 package com.clarusone.poker.helper;
 
-import com.clarusone.poker.engine.PokerRanking;
+import com.clarusone.poker.model.PokerRanking;
 import com.clarusone.poker.model.Card;
 import com.clarusone.poker.model.CardRank;
 import com.clarusone.poker.model.CardSuit;
@@ -9,14 +9,11 @@ import java.util.*;
 
 public class PokerRankingHelper {
 
-    private TreeMap<CardRank, Integer> cardRankWithCount = new TreeMap<>();
-    private TreeMap<CardSuit, Integer> cardSuitWithCount = new TreeMap<>();
-
     /**
-     * Capture counts of each Card Rank and Card Suite as a new Card is added to the hand.
-     * Imagine looking at your cards as you get a Card.
+     * Maps count of each Card Rank present in the Cards.
      */
-    public void captureCountOfRank(List<Card> cards) {
+    private static Map<CardRank, Integer> mapRankWithCountRank(List<Card> cards) {
+        Map<CardRank, Integer> cardRankWithCount = new TreeMap<>();
         for (Card card : cards) {
             CardRank cardRank = card.getCardRank();
             if (cardRankWithCount.containsKey(cardRank)) {
@@ -26,9 +23,15 @@ public class PokerRankingHelper {
                 cardRankWithCount.put(cardRank, 1);
             }
         }
+        return cardRankWithCount;
     }
 
-    public void captureCountOfSuite(List<Card> cards) {
+    /**
+     * Map count of each Card Suite present in the Cards.
+     */
+    private static Map<CardSuit, Integer> MapSuiteWithCount(List<Card> cards) {
+        Map<CardSuit, Integer> cardSuitWithCount = new TreeMap<>();
+
         for (Card card : cards) {
             CardSuit cardSuite = card.getCardSuit();
             if (cardSuitWithCount.containsKey(cardSuite)) {
@@ -38,68 +41,51 @@ public class PokerRankingHelper {
                 cardSuitWithCount.put(cardSuite, 1);
             }
         }
+        return cardSuitWithCount;
     }
 
     /**
-     * Returns an object - CardRank plus count of pair (a pair, two pairs, three cards with the same rank
+     * Returns PokerRanking by counting CardRank in single, pair, three and four of a kind.
+     * TODO don't forget to check 2 pairs
      */
-    public PokerRanking findPairsOfRank() {
-        PokerRanking pokerRanking = null;
-        CardRank cardWithHighestRank;
-        Integer pairCount = 0;
+    public static PokerRanking findPairsOfRank(List<Card> cards) {
+        Map<CardRank, Integer> cardRankWithCount = mapRankWithCountRank(cards);
+        PokerRanking pokerRanking = PokerRanking.NONE; // default
+
+        CardRank cardRank = null;
+        Integer rankCount = 0;
 
         Set cardRankSet = cardRankWithCount.entrySet();
         Iterator iterator = cardRankSet.iterator();
         while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
-            if((Integer) entry.getValue() > pairCount) {
-                pairCount = (Integer) entry.getValue();
+            if((Integer) entry.getValue() > rankCount) {
+                cardRank = (CardRank) entry.getKey();
+                rankCount = (Integer) entry.getValue();
             }
-            System.out.printf("Key: %s & Value: %d%n", entry.getKey(), (Integer) entry.getValue());
         }
 
-        if(pairCount == 1) {
+        if(rankCount == 1) {
             pokerRanking = PokerRanking.NONE;
-        } else if(pairCount == 2) {
+        } else if(rankCount == 2) {
             pokerRanking = PokerRanking.ONE_PAIR;
-        } else if(pairCount == 3) {
+        } else if(rankCount == 3) {
             pokerRanking = PokerRanking.THREE_OF_A_KIND;
-        } else if(pairCount == 4) {
+        } else if(rankCount == 4) {
             pokerRanking = PokerRanking.FOUR_OF_A_KIND;
         }
 
         return pokerRanking;
     }
 
-    private void showMyCardsRanking() {
-        Set cardRankSet = cardRankWithCount.entrySet();
-        Iterator iterator = cardRankSet.iterator();
-        while (iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            System.out.printf("Key: %s & Value: %d%n", entry.getKey(), (Integer) entry.getValue());
+    /**
+     * Calculates the rank and suit distributions.
+     */
+    public void calculateDistributions(List<Card> cards) {
+        int rankDist[] = new int[6];
+        for (Card card : cards) {
+//            rankDist[card.getRank()]++;
+  //          suitDist[card.getSuit()]++;
         }
-
-        Set cardSuiteSet = cardSuitWithCount.entrySet();
-        iterator = cardSuiteSet.iterator();
-        while (iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            System.out.printf("Key: %s & Value: %d%n", entry.getKey(), (Integer) entry.getValue());
-        }
-
     }
-
-    public static void main(String[] args) {
-        PokerRankingHelper pokerRankingHelper = new PokerRankingHelper();
-        List<Card> cards = new ArrayList<>();
-
-        cards.add(new Card.CardBuilder(CardRank.KING, CardSuit.DIAMONDS).build());
-        cards.add(new Card.CardBuilder(CardRank.KING, CardSuit.CLUBS).build());
-        cards.add(new Card.CardBuilder(CardRank.EIGHT, CardSuit.HEARTS).build());
-        cards.add(new Card.CardBuilder(CardRank.ACE, CardSuit.HEARTS).build());
-
-        pokerRankingHelper.captureCountOfRank(cards);
-        pokerRankingHelper.captureCountOfSuite(cards);
-        pokerRankingHelper.showMyCardsRanking();
-    }
-
 }

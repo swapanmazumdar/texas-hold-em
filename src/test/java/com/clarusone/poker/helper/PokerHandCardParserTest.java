@@ -14,7 +14,7 @@ public class PokerHandCardParserTest {
     @Test
     public void test_PrepareCardsListFromCardStr() {
         String pokerHand = "KS 2H 5C JD TD";
-        List<Card> actual = PokerHandCardParser.prepareCardsListFromCardStr(pokerHand);
+        List<Card> actual = PokerHandCardParser.prepareCardsFromCardStr(pokerHand);
 
         List<Card> expected = new ArrayList<>();
         Card.CardBuilder builder = new Card.CardBuilder(CardRank.KING, CardSuit.SPADES);
