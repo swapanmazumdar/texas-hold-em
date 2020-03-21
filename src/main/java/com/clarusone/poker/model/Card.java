@@ -1,8 +1,8 @@
 package com.clarusone.poker.model;
 
 /**
- * Card consists of CardRank and CardSuite. Two Card objects may be compared with each other according to it's CardRank
- * object.
+ * Card consists of CardRank and CardSuit. Two Card objects may be compared with each other according to it's CardRank
+ * object's natural order comparison.
  */
 public class Card implements Comparable<Card> {
 
@@ -43,7 +43,7 @@ public class Card implements Comparable<Card> {
     @Override
     public int hashCode() {
         int result = this.cardRank.hashCode();
-        result = 31 * result + this.cardSuit.hashCode();
+        result = 31 * result;
         return result;
     }
 

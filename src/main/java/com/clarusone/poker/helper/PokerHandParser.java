@@ -1,6 +1,5 @@
 package com.clarusone.poker.helper;
 
-import com.clarusone.poker.exception.InvalidCardRankException;
 import com.clarusone.poker.model.Card;
 import com.clarusone.poker.model.CardRank;
 import com.clarusone.poker.model.CardSuit;
@@ -8,7 +7,7 @@ import com.clarusone.poker.model.CardSuit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokerHandCardParser {
+public class PokerHandParser {
 
     /**
      * Parses string of cards. Assuming there are only 5 cards which are space separated in the string to keep things
@@ -39,13 +38,4 @@ public class PokerHandCardParser {
         return cardList;
     }
 
-    /**
-     * Parses rank from specified string
-     */
-    private static CardRank parseCardRank(String cardStr) throws InvalidCardRankException {
-        if (cardStr == null || cardStr.length() == 0) {
-            throw new InvalidCardRankException("Card rank can't be null!");
-        }
-        return null;
-    }
 }

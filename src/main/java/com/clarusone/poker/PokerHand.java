@@ -1,6 +1,6 @@
 package com.clarusone.poker;
 
-import com.clarusone.poker.helper.PokerHandCardParser;
+import com.clarusone.poker.helper.PokerHandParser;
 import com.clarusone.poker.helper.PokerRankingHelper;
 import com.clarusone.poker.model.Card;
 
@@ -22,7 +22,7 @@ public class PokerHand implements Comparable<PokerHand> {
      * Initializes 5 cards and sets weighted distribution of cards.
      */
     public PokerHand(String fiveCards) {
-        cards = PokerHandCardParser.prepareCardsFromCardStr(fiveCards);
+        cards = PokerHandParser.prepareCardsFromCardStr(fiveCards);
         setWeightedDistributionsOfCards(cards);
     }
 

@@ -16,7 +16,7 @@ public class PokerRankingHelperTest {
         String cardsStr = "AH AS 8D 6S 3C";
         PokerHand pokerHand = new PokerHand(cardsStr);
 
-        Assert.assertTrue(PokerRankingHelper.isOnePair(pokerHand));
+        Assert.assertTrue(PokerRankingHelper.hasOnePairOnly(pokerHand));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class PokerRankingHelperTest {
         String cardsStr = "KS KH 8D 8H 4S";
         PokerHand pokerHand = new PokerHand(cardsStr);
 
-        Assert.assertTrue(PokerRankingHelper.isOnePair(pokerHand)); //TODO it has 2 pairs the test should fail
+        Assert.assertTrue(PokerRankingHelper.hasOnePairOnly(pokerHand)); //TODO it has 2 pairs the test should fail
     }
 
     @Test

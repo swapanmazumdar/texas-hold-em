@@ -3,13 +3,7 @@ package com.clarusone.poker;
 import static com.clarusone.poker.HandResult.*;
 import static org.junit.Assert.assertEquals;
 
-import com.clarusone.poker.helper.PokerHandCardParser;
-import com.clarusone.poker.model.Card;
-import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Collections;
-import java.util.List;
 
 public class PokerHandTests {
 
