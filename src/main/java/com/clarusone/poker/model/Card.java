@@ -6,9 +6,6 @@ package com.clarusone.poker.model;
  */
 public class Card implements Comparable<Card> {
 
-    public static final int NO_OF_RANKS_IN_A_DECK = 13;
-    public static final int NO_OF_SUITS_IN_A_DECK = 4;
-
     private CardRank cardRank;
     private CardSuit cardSuit;
 

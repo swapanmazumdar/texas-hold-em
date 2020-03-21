@@ -18,10 +18,7 @@ public class CardTest {
     public void should_Pass_ReflexiveEqualityTest_ForValidCards() {
         Card.CardBuilder builder = new Card.CardBuilder(CardRank.EIGHT, CardSuit.CLUBS);
         Card cludsEightCard1 = builder.build();
-
-        builder = new Card.CardBuilder(CardRank.EIGHT, CardSuit.CLUBS);
-        Card cludsEightCard2 = builder.build();
-        Assert.assertEquals(cludsEightCard1, cludsEightCard2);
+        Assert.assertTrue(cludsEightCard1.equals(cludsEightCard1));
     }
 
     @Test

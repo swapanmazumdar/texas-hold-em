@@ -4,7 +4,6 @@ package com.clarusone.poker.model;
  * Rankings in Poker (Texas Hold'em) from the lowest to the highest.
  */
 public enum PokerRanking {
-    NONE,
     HIGH_CARD, // has no pair of ranks - KD 7S 5D 3C 2S
     ONE_PAIR, // has one pair - AH AS 8D 6S 3C
     TWO_PAIRS, // has 2 pairs - KS KH 8D 8H 4S

@@ -3,7 +3,13 @@ package com.clarusone.poker;
 import static com.clarusone.poker.HandResult.*;
 import static org.junit.Assert.assertEquals;
 
+import com.clarusone.poker.helper.PokerHandCardParser;
+import com.clarusone.poker.model.Card;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Collections;
+import java.util.List;
 
 public class PokerHandTests {
 
@@ -88,7 +94,6 @@ public class PokerHandTests {
         compareHands(TIE, "2S AH 4H 5S 6C", "AD 4C 5H 6H 2C");
     }
 */
-
     private void compareHands(HandResult expectedResult, String playerHand, String opponentHand) {
         PokerHand player = new PokerHand(playerHand);
         PokerHand opponent = new PokerHand(opponentHand);
