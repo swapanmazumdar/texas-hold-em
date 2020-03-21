@@ -8,7 +8,7 @@ import java.util.Objects;
 public class CardTest {
 
     @Test
-    public void should_BuildCard_ForValidRankAndSuite() {
+    public void should_BuildCard_FromValidRankAndSuite() {
         Card.CardBuilder builder = new Card.CardBuilder(CardRank.ACE, CardSuit.DIAMONDS);
         Card card = builder.build();
         Assert.assertTrue(Objects.nonNull(card));
@@ -56,7 +56,5 @@ public class CardTest {
         Card anotherEightClubsCard = builder.build();
         Assert.assertTrue(eightClubsCard.compareTo(eightClubsCard) == 0);
     }
-
-    //TODO transitive and consistent tests
 
 }
