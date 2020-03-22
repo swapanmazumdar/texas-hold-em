@@ -7,6 +7,9 @@ import com.clarusone.poker.model.Card;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Prepares 5 cards, sorts ascending and sets weighted distribution of cards, and allows comparison.
+ */
 public class PokerHand implements Comparable<PokerHand> {
 
     /**
@@ -19,10 +22,11 @@ public class PokerHand implements Comparable<PokerHand> {
     private List<Card> cards = null;
 
     /**
-     * Initializes 5 cards and sets weighted distribution of cards.
+     * Prepares 5 cards, sorts ascending and sets weighted distribution of cards.
      */
     public PokerHand(String fiveCards) {
         cards = PokerHandParser.prepareCardsFromCardStr(fiveCards);
+        Collections.sort(cards);
         setWeightedDistributionsOfCards(cards);
     }
 
@@ -43,7 +47,6 @@ public class PokerHand implements Comparable<PokerHand> {
      * store ordered Rank. Store count of a rank in the index of that Rank.
      */
     private void setWeightedDistributionsOfCards(List<Card> cards) {
-        Collections.sort(cards);
         for (Card card : cards) {
             rankDistribution[card.getCardRank().ordinal()]++;
             suitDistribution[card.getCardSuit().ordinal()]++;

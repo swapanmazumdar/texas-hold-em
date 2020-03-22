@@ -13,9 +13,9 @@ public class Card implements Comparable<Card> {
         private final CardRank cardRank;
         private final CardSuit cardSuit;
 
-        public CardBuilder(CardRank cardRank, CardSuit cardSuite) {
+        public CardBuilder(CardRank cardRank, CardSuit cardSuit) {
             this.cardRank = cardRank;
-            this.cardSuit = cardSuite;
+            this.cardSuit = cardSuit;
         }
 
         public Card build() {
@@ -56,7 +56,7 @@ public class Card implements Comparable<Card> {
             return false;
         }
         Card card = (Card) obj;
-        return cardRank.equals(card.getCardRank()) && cardSuit.equals(card.cardSuit);
+        return cardRank.equals(card.getCardRank()); // don't check equality of CardSuit
     }
 
     @Override

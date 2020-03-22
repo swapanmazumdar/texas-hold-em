@@ -12,7 +12,7 @@ public class PokerRankingHelper {
     public static final int NO_OF_RANKS_IN_A_DECK = 13;
     public static final int NO_OF_TYPE_OF_SUITS_IN_A_DECK = 4;
     private static final int MAX_NO_OF_SAME_SUIT_IN_A_HAND = 5;
-    private static String ACE_HIGH_CARDS_STR = "A K Q J T";
+    private static final int THREE_OF_A_KIND = 3;
 
     private PokerRankingHelper() {
     }
@@ -25,15 +25,27 @@ public class PokerRankingHelper {
     }
 
     /**
-     * Is an ace-high straight flush; it contains Ace, King, Queen, Jack & Ten.
+     * Is an ace-high straight flush. It contains Ace, King, Queen, Jack & Ten.
      */
     private static boolean hasAceHighStraightFlush(PokerHand pokerHand) {
-        String[] cards = PokerHandParser.parseCardsAs2Chars(ACE_HIGH_CARDS_STR);
-        return true;
+        List<Card> cards = pokerHand.getCards();
+        // CardSuit can be null since it is not part of
+        // Search for presence of Ace, King, Queen, Jack & Ten
+        if (cards.contains(new Card.CardBuilder(CardRank.ACE, null).build())
+                && cards.contains(new Card.CardBuilder(CardRank.KING, null).build())
+                && cards.contains(new Card.CardBuilder(CardRank.QUEEN, null).build())
+                && cards.contains(new Card.CardBuilder(CardRank.JACK, null).build())
+                && cards.contains(new Card.CardBuilder(CardRank.TEN, null).build())) {
+            return true;
+        }
+        return false;
     }
 
-    public boolean isStraightFlush() {
-        return false;
+    /**
+     * Is a straight flush; has cards in sequence and all in same suit.
+     */
+    public static boolean isStraightFlush(PokerHand pokerHand) {
+        return isStraight(pokerHand) && hasSameSuit(pokerHand);
     }
 
     /**
@@ -49,8 +61,11 @@ public class PokerRankingHelper {
         return false;
     }
 
+    /**
+     * Has 3 of a kind and a pair.
+     */
     public static boolean isFullHouse(PokerHand pokerHand) {
-        return false;
+        return isThreeOfAKind(pokerHand) && hasOnePairOnly(pokerHand);
     }
 
     /**
@@ -61,11 +76,10 @@ public class PokerRankingHelper {
     }
 
     /**
-     * Are all ranks in sequence and all ranks are not of the same suit.
+     * Are all ranks in sequence.
      */
     public static boolean isStraight(PokerHand pokerHand) {
-        boolean isInSequence = isInSequence(pokerHand);
-        return false;
+        return isInSequence(pokerHand);
     }
 
     /**
@@ -73,13 +87,9 @@ public class PokerRankingHelper {
      */
     public static boolean isThreeOfAKind(PokerHand pokerHand) {
         int[] rankDistribution = pokerHand.getRankDistribution();
-        for (int i = NO_OF_RANKS_IN_A_DECK - 1; i >= 0; i--) {
-            if (rankDistribution[i] == 3) {
-                return true;
-            }
-        }
-        new IllegalArgumentException();
-        return false;
+        Arrays.sort(rankDistribution);
+        int index = Arrays.binarySearch(rankDistribution, THREE_OF_A_KIND);
+        return index >= 0;
     }
 
     /**
@@ -97,16 +107,17 @@ public class PokerRankingHelper {
     }
 
     /**
-     * Has one pair.
-     * Implementation: Should have used descending ordering.
+     * Has one pair only.
      */
     public static boolean hasOnePairOnly(PokerHand pokerHand) {
-        int[] rankDistribution = pokerHand.getSuitDistribution();
-        Arrays.sort(rankDistribution); //
-        if (rankDistribution[rankDistribution.length - 1] == 1) {
-            return true;
+        int[] rankDistribution = pokerHand.getRankDistribution();
+        int count = 0;
+        for(int i=0; i<rankDistribution.length; i++) {
+            if(rankDistribution[i] == 2) {
+                count++;
+            }
         }
-        return false;
+        return count == 1;
     }
 
     /**
@@ -134,13 +145,18 @@ public class PokerRankingHelper {
     public static boolean isInSequence(PokerHand pokerHand) {
         List<Card> cards = pokerHand.getCards();
         CardRank cardRank = cards.get(0).getCardRank();
-        for (int i = 1; i < cards.size() - 1; i++) {
-            if (cardRank.compareTo(cards.get(i).getCardRank()) != 1) {
-                return false;
+        int count = 1;
+        for (int i = 1; i < cards.size(); i++) {
+            if (cardRank.compareTo(cards.get(i).getCardRank()) == -1) { // should have -1 for 5.compareTo(6)
+                count++;
             }
             cardRank = cards.get(i).getCardRank();
         }
-        return true;
+        if (count == 5) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -149,10 +165,8 @@ public class PokerRankingHelper {
      */
     private static boolean hasSameSuit(PokerHand pokerHand) {
         int[] suitDistribution = pokerHand.getSuitDistribution();
-        int[] newCopy = Arrays.copyOf(suitDistribution, suitDistribution.length);
-        Arrays.sort(newCopy);
         int count = Arrays.binarySearch(suitDistribution, MAX_NO_OF_SAME_SUIT_IN_A_HAND);
-        return (count == MAX_NO_OF_SAME_SUIT_IN_A_HAND);
+        return (count >= 0); // a positive value means there exist maximum no. of a type of a suit
     }
 
 }
