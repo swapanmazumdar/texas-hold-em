@@ -18,9 +18,9 @@ public class PokerHandTests {
     }
 
     @Test
-    public void highest_4_of_a_kind_wins() {
+    public void highest_4_of_a_kind_wins() { // If two or more players share the same four of a kind, then the fifth card kicker determines the winner.
         compareHands(WIN, "AS AH 2H AD AC", "JS JD JC JH 3D");
-    } // check for kicker
+    }
 
     @Test
     public void four_of_a_kind_beats_a_full_house() {
@@ -33,9 +33,9 @@ public class PokerHandTests {
     }
 
     @Test
-    public void highest_flush_wins() {
+    public void highest_flush_wins() { // check for the highest card
         compareHands(WIN, "AS 3S 4S 8S 2S", "2H 3H 5H 6H 7H");
-    } // check for the highest card
+    }
 
     @Test
     public void flush_beats_a_straight() {
@@ -63,8 +63,8 @@ public class PokerHandTests {
     }
 
     @Test
-    public void highest_pair_wins() {
-        compareHands(LOSS, "6S AD 7H 4S AS", "AH AC 5H 6H 7S"); // check for kickers
+    public void highest_pair_wins() { // check for kickers
+        compareHands(LOSS, "6S AD 7H 4S AS", "AH AC 5H 6H 7S");
     }
 
     @Test

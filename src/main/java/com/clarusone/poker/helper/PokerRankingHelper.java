@@ -113,8 +113,8 @@ public class PokerRankingHelper {
     public static boolean hasOnePairOnly(PokerHand pokerHand) {
         int[] rankDistribution = pokerHand.getRankDistribution();
         int count = 0;
-        for(int i=0; i<rankDistribution.length; i++) {
-            if(rankDistribution[i] == 2) {
+        for (int i = 0; i < rankDistribution.length; i++) {
+            if (rankDistribution[i] == 2) {
                 count++;
             }
         }
@@ -171,23 +171,23 @@ public class PokerRankingHelper {
     }
 
     public static PokerRanking rank(PokerHand pokerHand) {
-        if(isRoyalFlush(pokerHand)) {
+        if (isRoyalFlush(pokerHand)) {
             return PokerRanking.ROYAL_FLUSH;
-        } else if(isStraightFlush(pokerHand)) {
+        } else if (isStraightFlush(pokerHand)) {
             return PokerRanking.STRAIGHT_FLUSH;
-        } else if(isFourOfAKind(pokerHand)) {
+        } else if (isFourOfAKind(pokerHand)) {
             return PokerRanking.FOUR_OF_A_KIND;
-        } else if(isFullHouse(pokerHand)) {
+        } else if (isFullHouse(pokerHand)) {
             return PokerRanking.FULL_HOUSE;
-        } else if(isFlush(pokerHand)) {
+        } else if (isFlush(pokerHand)) {
             return PokerRanking.FLUSH;
-        } else if(isStraight(pokerHand)) {
+        } else if (isStraight(pokerHand)) {
             return PokerRanking.STRAIGHT;
-        } else if(isThreeOfAKind(pokerHand)) {
+        } else if (isThreeOfAKind(pokerHand)) {
             return PokerRanking.THREE_OF_A_KIND;
-        } else if(hasTwoPairs(pokerHand)) {
+        } else if (hasTwoPairs(pokerHand)) {
             return PokerRanking.TWO_PAIRS;
-        } else if(hasOnePairOnly(pokerHand)) {
+        } else if (hasOnePairOnly(pokerHand)) {
             return PokerRanking.ONE_PAIR;
         } else {
             return PokerRanking.HIGH_CARD;
