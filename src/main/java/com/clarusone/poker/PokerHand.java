@@ -3,6 +3,7 @@ package com.clarusone.poker;
 import com.clarusone.poker.helper.PokerHandParser;
 import com.clarusone.poker.helper.PokerRankingHelper;
 import com.clarusone.poker.model.Card;
+import com.clarusone.poker.model.PokerRanking;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,8 +44,8 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     /**
-     * Calculates weighted distribution of cards based on the connected component algorithm. Data structure used will
-     * store ordered Rank. Store count of a rank in the index of that Rank.
+     * Calculates weighted distribution of cards based on the connected component algorithm. Store count of a rank in
+     * the index of that Rank.
      */
     private void setWeightedDistributionsOfCards(List<Card> cards) {
         for (Card card : cards) {
@@ -55,7 +56,13 @@ public class PokerHand implements Comparable<PokerHand> {
 
     @Override
     public int compareTo(PokerHand opponentHand) {
-        int[] rankDistribution = this.getRankDistribution();
-        return 0;
+        PokerRanking thisPokerRanking = PokerRankingHelper.rank(this);
+        PokerRanking opponentPokerRanking = PokerRankingHelper.rank(opponentHand);
+        if (thisPokerRanking.compareTo(opponentPokerRanking) > 0) {
+            return HandResult.WIN.comparatorValue;
+        } else if (thisPokerRanking.compareTo(opponentPokerRanking) < 0) {
+            return HandResult.LOSS.comparatorValue;
+        }
+        return HandResult.TIE.comparatorValue;
     }
 }

@@ -3,6 +3,7 @@ package com.clarusone.poker.helper;
 import com.clarusone.poker.PokerHand;
 import com.clarusone.poker.model.Card;
 import com.clarusone.poker.model.CardRank;
+import com.clarusone.poker.model.PokerRanking;
 
 import java.util.Arrays;
 import java.util.List;
@@ -169,4 +170,27 @@ public class PokerRankingHelper {
         return (count >= 0); // a positive value means there exist maximum no. of a type of a suit
     }
 
+    public static PokerRanking rank(PokerHand pokerHand) {
+        if(isRoyalFlush(pokerHand)) {
+            return PokerRanking.ROYAL_FLUSH;
+        } else if(isStraightFlush(pokerHand)) {
+            return PokerRanking.STRAIGHT_FLUSH;
+        } else if(isFourOfAKind(pokerHand)) {
+            return PokerRanking.FOUR_OF_A_KIND;
+        } else if(isFullHouse(pokerHand)) {
+            return PokerRanking.FULL_HOUSE;
+        } else if(isFlush(pokerHand)) {
+            return PokerRanking.FLUSH;
+        } else if(isStraight(pokerHand)) {
+            return PokerRanking.STRAIGHT;
+        } else if(isThreeOfAKind(pokerHand)) {
+            return PokerRanking.THREE_OF_A_KIND;
+        } else if(hasTwoPairs(pokerHand)) {
+            return PokerRanking.TWO_PAIRS;
+        } else if(hasOnePairOnly(pokerHand)) {
+            return PokerRanking.ONE_PAIR;
+        } else {
+            return PokerRanking.HIGH_CARD;
+        }
+    }
 }
