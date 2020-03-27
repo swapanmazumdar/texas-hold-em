@@ -8,6 +8,8 @@ import com.clarusone.poker.model.PokerRanking;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.stream;
+
 public class PokerRankingHelper {
 
     public static final int NO_OF_RANKS_IN_A_DECK = 13;
@@ -54,12 +56,8 @@ public class PokerRankingHelper {
      */
     public static boolean isFourOfAKind(PokerHand pokerHand) {
         int[] rankDistribution = pokerHand.getRankDistribution();
-        for (int i = NO_OF_RANKS_IN_A_DECK - 1; i >= 0; i--) {
-            if (rankDistribution[i] == 4) {
-                return true;
-            }
-        }
-        return false;
+        long fourOfAKindCount = stream(rankDistribution).filter(i -> i == 4).count();
+        return fourOfAKindCount > 0;
     }
 
     /**
@@ -98,13 +96,8 @@ public class PokerRankingHelper {
      */
     public static boolean hasTwoPairs(PokerHand pokerHand) {
         int[] rankDistribution = pokerHand.getRankDistribution();
-        int noOfPairs = 0;
-        for (int i = NO_OF_RANKS_IN_A_DECK - 1; i >= 0; i--) {
-            if (rankDistribution[i] == 2) {
-                noOfPairs++;
-            }
-        }
-        return (noOfPairs == 2);
+        long twoPairsCount = Arrays.stream(rankDistribution).filter(i -> i == 2).count();
+        return (twoPairsCount == 2);
     }
 
     /**
@@ -112,13 +105,8 @@ public class PokerRankingHelper {
      */
     public static boolean hasOnePairOnly(PokerHand pokerHand) {
         int[] rankDistribution = pokerHand.getRankDistribution();
-        int count = 0;
-        for (int i = 0; i < rankDistribution.length; i++) {
-            if (rankDistribution[i] == 2) {
-                count++;
-            }
-        }
-        return count == 1;
+        long hasOnePairCount = stream(rankDistribution).filter(i -> i == 2).count();
+        return hasOnePairCount == 1;
     }
 
     /**
@@ -129,15 +117,12 @@ public class PokerRankingHelper {
         return hasUniqueRanks(rankDistribution) && !isInSequence(pokerHand);
     }
 
+    /**
+     * Has unique ranks.
+     */
     private static boolean hasUniqueRanks(int[] rankDistribution) {
-        boolean hasMoreCount = true;
-        for (int i = rankDistribution.length - 1; i >= 0; i--) {
-            if (rankDistribution[i] > 1) {
-                hasMoreCount = false; // found a rank with more counts
-                break;
-            }
-        }
-        return hasMoreCount;
+        long count = stream(rankDistribution).filter(i -> i > 1).count();
+        return count > 1;
     }
 
     /**
@@ -188,8 +173,11 @@ public class PokerRankingHelper {
         } else if (hasTwoPairs(pokerHand)) {
             return PokerRanking.TWO_PAIRS;
         } else if (hasOnePairOnly(pokerHand)) {
+            // If two or more players have the same pair, then the highest of the three remaining cards (known as kickers) determine the winner.
             return PokerRanking.ONE_PAIR;
         } else {
+            // Before returning check if the following condition is met
+            // If two or more players have the same high card, then the second highest card (and so on, to the fifth card if necessary) determine the winner.
             return PokerRanking.HIGH_CARD;
         }
     }
